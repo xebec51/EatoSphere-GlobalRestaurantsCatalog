@@ -1,6 +1,7 @@
 import 'regenerator-runtime'; /* for async await transpile */
 import { openDB } from 'idb';
 import '../styles/main.css';
+import { tampilkanRestoranFavorit } from './favorite';
 
 const mainContent = document.querySelector('#main-content');
 const hamburger = document.querySelector('.hamburger');
@@ -67,7 +68,16 @@ function tampilkanDaftarRestoran() {
       detailLinks.forEach((link) => {
         link.addEventListener('click', (event) => {
           event.preventDefault();
-          window.location.hash = link.getAttribute('href');
+
+          // Ambil elemen <a> yang menjadi parent dari tombol
+          const linkElement = event.target.closest('a');
+
+          // Ambil id restoran dari atribut href
+          const href = linkElement.getAttribute('href');
+          const id = href.substring(href.lastIndexOf('/') + 1);
+
+          // Panggil fungsi tampilkanDetailRestoran dengan id yang benar
+          tampilkanDetailRestoran(id);
         });
       });
     })
@@ -88,32 +98,47 @@ function tampilkanDetailRestoran(id) {
       const restaurantElement = document.createElement('article');
       restaurantElement.classList.add('restaurant-detail');
       restaurantElement.innerHTML = `
-        <h2>${restaurant.name}</h2>
-        <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}" class="restaurant-image">
-        <p>Alamat: ${restaurant.address}</p>
-        <p>Kota: ${restaurant.city}</p>
-        <p>Rating: ${restaurant.rating}</p>
-        <h3>Deskripsi</h3>
-        <p>${restaurant.description}</p>
-        <h3>Menu Makanan</h3>
-        <ul>
-          ${restaurant.menus.foods.map((food) => `<li>${food.name}</li>`).join('')}
-        </ul>
-        <h3>Menu Minuman</h3>
-        <ul>
-          ${restaurant.menus.drinks.map((drink) => `<li>${drink.name}</li>`).join('')}
-        </ul>
-        <h3>Customer Reviews</h3>
-        <ul>
-          ${restaurant.customerReviews.map((review) => `
-            <li>
-              <h4>${review.name}</h4>
-              <p>${review.date}</p>
-              <p>${review.review}</p>
-            </li>
-          `).join('')}
-        </ul>
-        <button id="favoriteButton">Tambahkan ke Favorit</button> 
+        <div class="restaurant-detail-card">
+          <h2>${restaurant.name}</h2>
+          <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}" class="restaurant-image">
+          <div class="restaurant-info">
+            <table>
+              <tr>
+                <th>Alamat</th>
+                <td>${restaurant.address}</td>
+              </tr>
+              <tr>
+                <th>Kota</th>
+                <td>${restaurant.city}</td>
+              </tr>
+              <tr>
+                <th>Rating</th>
+                <td>${restaurant.rating}</td>
+              </tr>
+            </table>
+            <h3>Deskripsi</h3>
+            <p>${restaurant.description}</p>
+            <h3>Menu Makanan</h3>
+            <ul>
+              ${restaurant.menus.foods.map((food) => `<li>${food.name}</li>`).join('')}
+            </ul>
+            <h3>Menu Minuman</h3>
+            <ul>
+              ${restaurant.menus.drinks.map((drink) => `<li>${drink.name}</li>`).join('')}
+            </ul>
+            <h3>Customer Reviews</h3>
+            <div class="reviews">
+              ${restaurant.customerReviews.map((review) => `
+                <div class="review-card">
+                  <h4>${review.name}</h4>
+                  <p>${review.date}</p>
+                  <p>${review.review}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <button id="favoriteButton">Tambahkan ke Favorit</button>
+        </div>
       `;
       mainContent.appendChild(restaurantElement);
 
@@ -126,52 +151,34 @@ function tampilkanDetailRestoran(id) {
     });
 }
 
-// Fungsi untuk menampilkan restoran favorit
-async function tampilkanRestoranFavorit() {
-  const db = await dbPromise;
-  const tx = db.transaction('restaurants', 'readonly');
-  const store = tx.objectStore('restaurants');
-  const restaurants = await store.getAll();
-
-  mainContent.innerHTML = '';
-
-  if (restaurants.length === 0) {
-    mainContent.innerHTML = '<p>Belum ada restoran favorit.</p>';
-    return;
-  }
-
-  restaurants.forEach((restaurant) => {
-    const restaurantElement = document.createElement('article');
-    restaurantElement.classList.add('restaurant-card');
-    restaurantElement.innerHTML = `
-      <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}" />
-      <div class="restaurant-info">
-        <h3>${restaurant.name}</h3>
-        <p>Kota: ${restaurant.city}</p>
-        <p>Rating: ${restaurant.rating}</p>
-        <p>${restaurant.description.substring(0, 100)}...</p>
-        <a href="#/detail/${restaurant.id}" class="restaurant-detail-link">Lihat Detail</a>
-      </div>
-    `;
-    mainContent.appendChild(restaurantElement);
-  });
-
-  // Tambahkan event listener pada tombol "Lihat Detail"
-  const detailLinks = document.querySelectorAll('.restaurant-detail-link');
-  detailLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      window.location.hash = link.getAttribute('href');
-    });
-  });
-}
-
 // Fungsi untuk menampilkan halaman "About Me"
 function tampilkanAboutMe() {
   mainContent.innerHTML = `
-    <section class="about-me">
-      <h2>About Me</h2>
-      <p>This is the About Me section.</p>
+    <section id="about-me" class="about-me-section">
+      <div class="about-me-container">
+        <div class="about-image">
+          <img src="images/profile-photo.jpg" alt="My photo" class="profile-photo" />
+        </div>
+        <div class="about-description">
+          <h2>About Me</h2>
+          <p>Hello! I'm Muh. Rinaldi Ruslan, a third-semester student majoring in Information Systems at Hasanuddin University. I live in Makassar, South Sulawesi. I'm passionate about technology, coding, and web development. I also enjoy exploring new cuisines and trying out different restaurants in my free time. My goal is to combine my passion for tech and creativity to build innovative web applications that enhance user experiences.</p>
+          <p>When I'm not coding, you can find me traveling or spending time with family and friends. Let's connect through the social media links below!</p>
+          <div class="social-links">
+            <a href="https://linkedin.com/in/rinaldiruslan" target="_blank" aria-label="LinkedIn">
+              <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+            <a href="https://instagram.com/rinaldiruslan" target="_blank" aria-label="Instagram">
+              <i class="fab fa-instagram fa-2x"></i>
+            </a>
+            <a href="https://facebook.com/rinaldi.naldi.5220" target="_blank" aria-label="Facebook">
+              <i class="fab fa-facebook fa-2x"></i>
+            </a>
+            <a href="https://github.com/xebec51" target="_blank" aria-label="GitHub">
+              <i class="fab fa-github fa-2x"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
   `;
 }
@@ -213,6 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
       isMenuOpen = false;
       navLinks.classList.remove('active');
     });
+  });
+
+  // Tambahkan event listener untuk tombol "Favorite" di navbar
+  const favoriteNavItem = document.querySelector('a[href="#/favorit"]');
+  favoriteNavItem.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.hash = '#/favorit';
+    handleRouting();
   });
 });
 

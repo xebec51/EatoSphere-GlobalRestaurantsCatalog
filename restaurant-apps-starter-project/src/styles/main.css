@@ -297,6 +297,90 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Restaurant Detail Styles */
+.restaurant-detail-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.restaurant-detail-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.restaurant-detail-card img.restaurant-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.restaurant-info {
+  margin-top: 1rem;
+}
+
+.restaurant-info table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.restaurant-info table th,
+.restaurant-info table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.restaurant-info h3 {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.restaurant-info ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+.reviews {
+  margin-top: 1rem;
+}
+
+.review-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-card h4 {
+  margin-bottom: 0.5rem;
+}
+
+.review-card p {
+  margin: 0.5rem 0;
+}
+
+#favoriteButton {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff6f61;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#favoriteButton:hover {
+  background-color: #e65b50;
+}
+
 /* About Me Section */
 .about-me {
   padding: 3rem;
