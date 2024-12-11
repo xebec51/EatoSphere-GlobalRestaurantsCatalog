@@ -1,0 +1,441 @@
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  display: inline-block;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+}
+
+/* Skip to Content */
+.skip-link {
+  position: absolute;
+  top: -40px; /* Menyembunyikan link di luar layar */
+  left: 0;
+  background-color: #ff6f61; /* Warna background saat fokus */
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 100; /* Pastikan muncul di atas elemen lain */
+  transition: top 0.3s ease; /* Animasi smooth saat muncul */
+}
+
+/* Tampilkan link ketika mendapat fokus */
+.skip-link:focus {
+  top: 0; /* Posisikan kembali link ke layar saat fokus */
+}
+
+/* App Bar - Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #3a3a3a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow untuk navbar */
+}
+
+/* Logo in text form */
+.logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff6f61;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+/* Navbar links */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none; 
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 0.5rem 1rem;
+}
+
+.nav-links a:hover {
+  background-color: #ff6f61;
+  color: white;
+  border-radius: 8px;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.hamburger span {
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+/* Animasi untuk hamburger */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+.nav-links.active {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  transition: max-height 0.3s ease-in-out; /* Animasi smooth saat muncul */
+  max-height: 300px; /* Batasi tinggi maksimum ketika aktif */
+  overflow: hidden; /* Menghindari content overflow */
+}
+
+.nav-links {
+  max-height: 0;
+  overflow: hidden; /* Sembunyikan elemen saat tidak aktif */
+}
+
+/* Aturan media untuk layar besar */
+@media (min-width: 769px) {
+  .hamburger {
+    display: none; /* Sembunyikan hamburger di layar besar */
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row; /* Tampilkan link secara horizontal */
+    max-height: none; /* Hilangkan batasan tinggi */
+    overflow: visible; /* Pastikan tidak tersembunyi */
+    background-color: transparent; /* Hilangkan background color */
+    padding: 0; /* Hilangkan padding */
+  }
+}
+
+/* Untuk layar kecil, sembunyikan navbar dan atur hamburger */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column; /* Susun link secara vertikal */
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex; /* Tampilkan link saat hamburger aktif */
+    background-color: #333;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .hamburger {
+    display: flex; /* Tampilkan hamburger pada layar kecil */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: #333;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+}
+
+/* Explore Restaurants Section */
+.restaurant-list-section {
+  padding: 2rem;
+  text-align: center;
+}
+
+.restaurant-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Restaurant Card Styles */
+.restaurant-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.restaurant-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.restaurant-info {
+  padding: 1rem;
+}
+
+.restaurant-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.restaurant-info p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.restaurant-detail-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff6f61;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.restaurant-detail-link:hover {
+  background-color: #e65b50;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.restaurant-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.restaurant-card img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.restaurant-info {
+  margin-top: 1rem;
+}
+
+.restaurant-info h3 {
+  font-size: 1.5rem;
+}
+
+.restaurant-info p {
+  margin: 0.5rem 0;
+}
+
+/* Hover effect for restaurant cards */
+.restaurant-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* About Me Section */
+.about-me {
+  padding: 3rem;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.about-me h2 {
+  padding: 1rem;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.about-me-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+.about-image img {
+  width: 300px;
+  height: 350px;
+  border-radius: 5%;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-me-description {
+  max-width: 600px;
+  text-align: left;
+}
+
+.about-description p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.5rem;
+}
+
+.social-links a {
+  color: #333;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.social-links a:hover {
+  color: #ff6f61;
+  transform: scale(1.2);
+}
+
+.fab {
+  font-size: 1.8rem;
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+  .about-me-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-me-description {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .about-image img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .about-description p {
+    font-size: 1rem;
+  }
+
+  .restaurant-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .restaurant-info p {
+    font-size: 0.9rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    background-color: #333;
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Smooth scroll for whole page */
+html {
+  scroll-behavior: smooth;
+}
