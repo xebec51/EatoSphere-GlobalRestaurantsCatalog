@@ -10,6 +10,7 @@ module.exports = merge(common, {
     open: true,
     compress: true,
     hot: true,
+    // Remove the port configuration to use the default port
     client: {
       overlay: {
         errors: true,
