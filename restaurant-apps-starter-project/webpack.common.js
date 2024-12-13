@@ -34,7 +34,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, 'src/templates/index.html'),
@@ -65,13 +64,4 @@ module.exports = {
       filename: '[name].css',
     }),
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    compress: true,
-    port: 8080,
-    hot: true,
-    open: true,
-  },
 };

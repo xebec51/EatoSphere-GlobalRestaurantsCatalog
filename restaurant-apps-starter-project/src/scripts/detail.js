@@ -11,31 +11,23 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 
 // Fungsi untuk menampilkan detail restoran
 export async function tampilkanDetailRestoran(id) {
-  const db = await dbPromise;
-  const tx = db.transaction('restaurants', 'readonly');
-  const store = tx.objectStore('restaurants');
-  const restaurantFromDB = await store.get(id);
-  await tx.done;
-
-  if (restaurantFromDB) {
-    displayRestaurantDetail(restaurantFromDB);
-  } else {
-    try {
+  try {
+    const cache = await caches.open('restaurant-detail');
+    const cachedResponse = await cache.match(`https://restaurant-api.dicoding.dev/detail/${id}`);
+    if (cachedResponse) {
+      const data = await cachedResponse.json();
+      displayRestaurantDetail(data.restaurant);
+    } else {
       const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${id}`);
+      const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();
-      const restaurant = data.restaurant;
-
-      // Save restaurant data to IndexedDB
-      const tx = db.transaction('restaurants', 'readwrite');
-      const store = tx.objectStore('restaurants');
-      await store.put(restaurant, restaurant.id);
-      await tx.done;
-
-      displayRestaurantDetail(restaurant);
-    } catch (error) {
-      console.error('Gagal memuat detail restoran:', error);
-      mainContent.innerHTML = '<p>Gagal memuat detail restoran. Silakan coba lagi nanti.</p>';
+      displayRestaurantDetail(data.restaurant);
+      // Cache response
+      cache.put(`https://restaurant-api.dicoding.dev/detail/${id}`, clonedResponse);
     }
+  } catch (error) {
+    console.error('Gagal memuat detail restoran:', error);
+    mainContent.innerHTML = '<p>Gagal memuat detail restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
   }
 }
 

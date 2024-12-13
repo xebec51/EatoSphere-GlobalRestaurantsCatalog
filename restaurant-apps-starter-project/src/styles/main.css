@@ -75,7 +75,7 @@ a {
 @media (max-width: 768px) {
   .nav-links {
     display: none;
-    position: fixed;
+    position: absolute; /* Change from fixed to absolute */
     top: 64px;
     left: 0;
     width: 100%;
@@ -155,7 +155,126 @@ a {
   }
 
   .nav-links {
+    display: none;
+    position: absolute; /* Change from fixed to absolute */
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-links.open {
     display: flex;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute; /* Change from fixed to absolute */
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-links.open {
+    display: flex;
+    transform: translateX(0);
+  }
+}
+
+.nav-links a {
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links a:hover {
+  background-color: #ff6f61;
+  border-radius: 8px;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Animasi untuk hamburger */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute; /* Change from fixed to absolute */
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-links.open {
+    display: flex;
+    transform: translateX(0);
   }
 }
 
@@ -183,7 +302,7 @@ a {
 
   .nav-links {
     display: none;
-    position: fixed;
+    position: absolute; /* Change from fixed to absolute */
     top: 64px;
     left: 0;
     right: 0;
@@ -232,7 +351,7 @@ a {
   }
 
   .nav-links {
-    position: absolute;
+    position: absolute; /* Change from fixed to absolute */
     top: 56px; /* Sesuaikan dengan tinggi navbar */
     left: 0;
     right: 0;
@@ -256,7 +375,7 @@ a {
 
   .nav-links {
     display: none;
-    position: fixed;
+    position: absolute; /* Change from fixed to absolute */
     top: 64px;
     left: 0;
     width: 100%;
@@ -294,6 +413,46 @@ a {
 
   .hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+
+/* Remove duplicate media queries using 'active' */
+@media (max-width: 768px) {
+  /* 
+  .nav-links.active {
+    display: flex !important;
+    transform: translateX(0);
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  */
+  
+  /* Ensure only 'open' class is used */
+  .nav-links.open {
+    display: flex;
+    transform: translateX(0);
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 }
 

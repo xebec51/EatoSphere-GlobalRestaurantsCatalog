@@ -5,11 +5,28 @@ workbox.setConfig({
 });
 
 const { registerRoute } = workbox.routing;
-const { StaleWhileRevalidate } = workbox.strategies;
+const { StaleWhileRevalidate, NetworkFirst } = workbox.strategies;
 
+// Cache daftar restoran dengan strategi NetworkFirst
 registerRoute(
-  ({ url }) => url.origin === 'https://restaurant-api.dicoding.dev',
+  ({ url }) => url.href === 'https://restaurant-api.dicoding.dev/list',
+  new NetworkFirst({
+    cacheName: 'restaurant-list',
+  })
+);
+
+// Cache detail restoran dengan strategi NetworkFirst
+registerRoute(
+  ({ url }) => url.href.includes('https://restaurant-api.dicoding.dev/detail/'),
+  new NetworkFirst({
+    cacheName: 'restaurant-detail',
+  })
+);
+
+// Cache gambar restoran dengan strategi StaleWhileRevalidate
+registerRoute(
+  ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/images/'),
   new StaleWhileRevalidate({
-    cacheName: 'restaurant-api',
+    cacheName: 'restaurant-images',
   })
 );

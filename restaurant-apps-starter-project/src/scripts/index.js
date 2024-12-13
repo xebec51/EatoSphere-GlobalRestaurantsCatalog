@@ -10,7 +10,7 @@ const navLinks = document.querySelector('.nav-links');
 const navItems = document.querySelectorAll('.nav-links a');
 const skipLink = document.querySelector('.skip-link');
 
-const isMenuOpen = false;
+let isMenuOpen = false;
 
 // Fungsi untuk membuka koneksi ke IndexedDB
 const dbPromise = openDB('favorite-restaurants', 1, {
@@ -20,43 +20,57 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 });
 
 // Fungsi untuk menampilkan daftar restoran
-function tampilkanDaftarRestoran() {
-  fetch('https://restaurant-api.dicoding.dev/list')
-    .then((response) => response.json())
-    .then((data) => {
-      const restaurants = data.restaurants;
-      mainContent.innerHTML = '<div class="restaurant-list"></div>';
-      const restaurantList = document.querySelector('.restaurant-list');
-      restaurants.forEach((restaurant) => {
-        const restaurantItem = document.createElement('div');
-        restaurantItem.className = 'restaurant-card';
-        restaurantItem.innerHTML = `
-          <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}">
-          <div class="restaurant-info">
-            <h3>${restaurant.name}</h3>
-            <p>Kota: ${restaurant.city}</p>
-            <p>Rating: ${restaurant.rating}</p>
-            <p>${restaurant.description.substring(0, 100)}...</p>
-            <a href="#/detail/${restaurant.id}" class="restaurant-detail-link">Lihat Detail</a>
-          </div>
-        `;
-        restaurantList.appendChild(restaurantItem);
-      });
+async function tampilkanDaftarRestoran() {
+  try {
+    const cache = await caches.open('restaurant-list');
+    const cachedResponse = await cache.match('https://restaurant-api.dicoding.dev/list');
 
-      // Add event listener to "Lihat Detail" buttons
-      const detailLinks = document.querySelectorAll('.restaurant-detail-link');
-      detailLinks.forEach((link) => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          const id = link.getAttribute('href').split('/')[2];
-          window.location.hash = `#/detail/${id}`;
-          handleRouting(); // Call handleRouting to display restaurant details
-        });
-      });
-    })
-    .catch((error) => {
-      console.error('Gagal memuat daftar restoran:', error);
+    if (cachedResponse) {
+      const data = await cachedResponse.json();
+      renderRestaurants(data.restaurants);
+    } else {
+      const response = await fetch('https://restaurant-api.dicoding.dev/list');
+      const clonedResponse = response.clone(); // Clone the response before consuming it
+      const data = await response.json();
+      renderRestaurants(data.restaurants);
+      // Cache response
+      cache.put('https://restaurant-api.dicoding.dev/list', clonedResponse);
+    }
+  } catch (error) {
+    console.error('Gagal memuat daftar restoran:', error);
+    mainContent.innerHTML = '<p>Gagal memuat daftar restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
+  }
+}
+
+function renderRestaurants(restaurants) {
+  mainContent.innerHTML = '<div class="restaurant-list"></div>';
+  const restaurantList = document.querySelector('.restaurant-list');
+  restaurants.forEach((restaurant) => {
+    const restaurantItem = document.createElement('div');
+    restaurantItem.className = 'restaurant-card';
+    restaurantItem.innerHTML = `
+      <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}">
+      <div class="restaurant-info">
+        <h3>${restaurant.name}</h3>
+        <p>Kota: ${restaurant.city}</p>
+        <p>Rating: ${restaurant.rating}</p>
+        <p>${restaurant.description.substring(0, 100)}...</p>
+        <a href="#/detail/${restaurant.id}" class="restaurant-detail-link">Lihat Detail</a>
+      </div>
+    `;
+    restaurantList.appendChild(restaurantItem);
+  });
+
+  // Add event listener to "Lihat Detail" buttons
+  const detailLinks = document.querySelectorAll('.restaurant-detail-link');
+  detailLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const id = link.getAttribute('href').split('/')[2];
+      window.location.hash = `#/detail/${id}`;
+      handleRouting(); // Call handleRouting to display restaurant details
     });
+  });
 }
 
 // Fungsi untuk menampilkan halaman "About Me"
@@ -129,33 +143,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const navigationDrawer = document.querySelector('.nav-links');
   const mainContent = document.querySelector('#main-content');
 
-  // Toggle menu handler
-  hamburgerButton.addEventListener('click', (event) => {
-    event.stopPropagation();
-    hamburgerButton.classList.toggle('open');
-    navigationDrawer.classList.toggle('open');
-  });
+  // Check if the event listener is already added
+  if (!hamburgerButton.dataset.listenerAdded) {
+    // Toggle menu handler with propagation stopped
+    hamburgerButton.addEventListener('click', (event) => {
+      event.stopPropagation(); // Prevent event bubbling
+      hamburgerButton.classList.toggle('open'); // Toggle 'open' class
+      navigationDrawer.classList.toggle('open'); // Toggle 'open' class
+      isMenuOpen = !isMenuOpen;
+      console.log('Menu is open:', isMenuOpen);
+    });
+
+    // Mark the event listener as added
+    hamburgerButton.dataset.listenerAdded = 'true';
+  }
 
   // Close menu when clicking on main content
   mainContent.addEventListener('click', () => {
-    hamburgerButton.classList.remove('open');
-    navigationDrawer.classList.remove('open');
-  });
-
-  // Close menu when clicking navigation links
-  navigationDrawer.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
+    if (isMenuOpen) {
       hamburgerButton.classList.remove('open');
       navigationDrawer.classList.remove('open');
-    });
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (event) => {
-    if (!hamburgerButton.contains(event.target) && !navigationDrawer.contains(event.target)) {
-      hamburgerButton.classList.remove('open');
-      navigationDrawer.classList.remove('open');
+      isMenuOpen = false;
     }
+  });
+
+  // Close menu when clicking on navigation items
+  navItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      if (isMenuOpen) {
+        hamburgerButton.classList.remove('open');
+        navigationDrawer.classList.remove('open');
+        isMenuOpen = false;
+      }
+    });
   });
 
   // Skip to content functionality
