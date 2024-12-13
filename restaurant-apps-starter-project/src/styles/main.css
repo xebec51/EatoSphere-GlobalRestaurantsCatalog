@@ -72,32 +72,6 @@ a {
   padding: 0;
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none;
-    position: absolute; /* Change from fixed to absolute */
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #3a3a3a;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-    z-index: 999;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .nav-links.open {
-    display: flex;
-    transform: translateX(0);
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
 .nav-links a {
   color: white;
   font-weight: bold;
@@ -149,9 +123,18 @@ a {
   transform: translateY(-8px) rotate(-45deg);
 }
 
+/* Mobile styling */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+    min-height: 56px; /* Lebih kecil untuk mobile tapi tetap proporsional */
+  }
+
   .hamburger {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: auto;
   }
 
   .nav-links {
@@ -159,6 +142,7 @@ a {
     position: absolute; /* Change from fixed to absolute */
     top: 64px;
     left: 0;
+    right: 0;
     width: 100%;
     background-color: #3a3a3a;
     flex-direction: column;
@@ -173,108 +157,88 @@ a {
     display: flex;
     transform: translateX(0);
   }
-}
 
-@media (max-width: 768px) {
-  .hamburger {
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .hamburger span {
     display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: white;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .about-me-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-me-description {
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .about-image img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .about-description p {
+    font-size: 1rem;
+  }
+
+  .restaurant-info h3 {
+    font-size: 1.2rem;
+  }
+
+  .restaurant-info p {
+    font-size: 0.9rem;
+  }
+
+  .hamburger {
+    display: flex;
   }
 
   .nav-links {
     display: none;
-    position: absolute; /* Change from fixed to absolute */
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #3a3a3a;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-    z-index: 999;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
   }
 
-  .nav-links.open {
+  .nav-links.active {
     display: flex;
-    transform: translateX(0);
-  }
-}
-
-.nav-links a {
-  color: white;
-  font-weight: bold;
-  font-size: 1.1rem;
-  padding: 1rem;
-  transition: all 0.3s ease;
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-}
-
-.nav-links a:hover {
-  background-color: #ff6f61;
-  border-radius: 8px;
-}
-
-/* Hamburger menu */
-.hamburger {
-  display: none;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0.8rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.hamburger span {
-  display: block;
-  width: 25px;
-  height: 3px;
-  margin: 5px 0;
-  background-color: white;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Animasi untuk hamburger */
-.hamburger.open span:nth-child(1) {
-  transform: translateY(8px) rotate(45deg);
-}
-
-.hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.open span:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
-    position: absolute; /* Change from fixed to absolute */
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #3a3a3a;
     flex-direction: column;
-    align-items: center;
+    background-color: #333;
+    width: 100%;
+    text-align: center;
     padding: 1rem 0;
-    z-index: 999;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .nav-links.open {
-    display: flex;
-    transform: translateX(0);
   }
 }
 
@@ -291,168 +255,6 @@ a {
     overflow: visible; /* Pastikan tidak tersembunyi */
     background-color: transparent; /* Hilangkan background color */
     padding: 0; /* Hilangkan padding */
-  }
-}
-
-/* Untuk layar kecil, sembunyikan navbar dan atur hamburger */
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
-  }
-
-  .nav-links {
-    display: none;
-    position: absolute; /* Change from fixed to absolute */
-    top: 64px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: #3a3a3a;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem 0;
-  }
-
-  .nav-links.active {
-    display: flex !important;
-  }
-
-  .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
-
-  .nav-links a {
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-  }
-}
-
-/* Mobile styling */
-@media screen and (max-width: 768px) {
-  .navbar {
-    padding: 0.5rem 1rem;
-    min-height: 56px; /* Lebih kecil untuk mobile tapi tetap proporsional */
-  }
-
-  .hamburger {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-left: auto;
-  }
-
-  .nav-links {
-    position: absolute; /* Change from fixed to absolute */
-    top: 56px; /* Sesuaikan dengan tinggi navbar */
-    left: 0;
-    right: 0;
-    background-color: #3a3a3a;
-    padding: 0;
-    display: none;
-  }
-
-  .nav-links.active {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .nav-links a {
-    padding: 1rem;
-    text-align: center;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .nav-links {
-    display: none;
-    position: absolute; /* Change from fixed to absolute */
-    top: 64px;
-    left: 0;
-    width: 100%;
-    background-color: #3a3a3a;
-    padding: 1rem 0;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .nav-links.active {
-    display: flex !important; /* Memaksa tampil ketika active */
-  }
-
-  .hamburger {
-    display: block;
-    cursor: pointer;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px 0;
-    background-color: white;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
-}
-
-/* Remove duplicate media queries using 'active' */
-@media (max-width: 768px) {
-  /* 
-  .nav-links.active {
-    display: flex !important;
-    transform: translateX(0);
-  }
-
-  .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
-  }
-  */
-  
-  /* Ensure only 'open' class is used */
-  .nav-links.open {
-    display: flex;
-    transform: translateX(0);
-  }
-
-  .hamburger.open span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-
-  .hamburger.open span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .hamburger.open span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
   }
 }
 
@@ -874,65 +676,6 @@ a {
 
 .fab {
   font-size: 1.8rem;
-}
-
-/* Responsiveness for smaller screens */
-@media (max-width: 768px) {
-  .about-me-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .about-me-description {
-    text-align: center;
-    font-size: 1rem;
-  }
-
-  .social-links {
-    justify-content: center;
-  }
-
-  .about-image img {
-    width: 150px;
-    height: 150px;
-  }
-
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-
-  .hero-text p {
-    font-size: 1rem;
-  }
-
-  .about-description p {
-    font-size: 1rem;
-  }
-
-  .restaurant-info h3 {
-    font-size: 1.2rem;
-  }
-
-  .restaurant-info p {
-    font-size: 0.9rem;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .nav-links.active {
-    display: flex;
-    flex-direction: column;
-    background-color: #333;
-    width: 100%;
-    text-align: center;
-    padding: 1rem 0;
-  }
 }
 
 /* Footer */

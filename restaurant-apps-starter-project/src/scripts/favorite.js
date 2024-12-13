@@ -55,6 +55,7 @@ export async function tampilkanRestoranFavorit() {
         event.preventDefault();
         const id = link.getAttribute('href').split('/')[2];
         window.location.hash = `#/detail/${id}`;
+        handleRouting(); // Call handleRouting to display restaurant details
       });
     });
   }

@@ -3,6 +3,7 @@ import { openDB } from 'idb';
 import '../styles/main.css';
 import { tampilkanRestoranFavorit } from './favorite';
 import { tampilkanDetailRestoran } from './detail'; // Import the function
+import swRegister from './swregister'; // Import swRegister
 
 const mainContent = document.querySelector('#main-content');
 const hamburger = document.querySelector('.hamburger');
@@ -38,7 +39,10 @@ async function tampilkanDaftarRestoran() {
     }
   } catch (error) {
     console.error('Gagal memuat daftar restoran:', error);
-    mainContent.innerHTML = '<p>Gagal memuat daftar restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
+    const restaurantList = document.querySelector('.restaurant-list');
+    if (restaurantList) {
+      restaurantList.innerHTML = '<p>Gagal memuat daftar restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
+    }
   }
 }
 
@@ -185,6 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mainContent.focus();
     mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
+
+  swRegister(); // Call swRegister to register the service worker
 });
 
 // Daftarkan service worker hanya di lingkungan produksi

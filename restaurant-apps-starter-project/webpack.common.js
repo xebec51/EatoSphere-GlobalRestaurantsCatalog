@@ -47,7 +47,7 @@ module.exports = {
       ],
     }),
     new WorkboxWebpackPlugin.GenerateSW({
-      swDest: './sw.js',
+      swDest: 'sw.bundle.js', // Ensure the service worker file is named sw.bundle.js
       clientsClaim: true,
       skipWaiting: true,
       runtimeCaching: [

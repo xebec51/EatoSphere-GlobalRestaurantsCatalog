@@ -5,12 +5,12 @@ workbox.setConfig({
 });
 
 const { registerRoute } = workbox.routing;
-const { StaleWhileRevalidate, NetworkFirst } = workbox.strategies;
+const { StaleWhileRevalidate, NetworkFirst, CacheFirst } = workbox.strategies;
 
-// Cache daftar restoran dengan strategi NetworkFirst
+// Cache daftar restoran dengan strategi StaleWhileRevalidate
 registerRoute(
   ({ url }) => url.href === 'https://restaurant-api.dicoding.dev/list',
-  new NetworkFirst({
+  new StaleWhileRevalidate({
     cacheName: 'restaurant-list',
   })
 );
@@ -23,10 +23,10 @@ registerRoute(
   })
 );
 
-// Cache gambar restoran dengan strategi StaleWhileRevalidate
+// Cache gambar restoran dengan strategi CacheFirst
 registerRoute(
   ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/images/'),
-  new StaleWhileRevalidate({
+  new CacheFirst({
     cacheName: 'restaurant-images',
   })
 );
