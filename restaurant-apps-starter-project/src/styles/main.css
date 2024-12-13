@@ -27,22 +27,18 @@ a {
   color: white;
   padding: 1rem;
   font-weight: bold;
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  z-index: 1001;
   text-decoration: none;
+  transition: top 0.3s ease;
 }
 
 .skip-link:focus {
   top: 0;
-  outline: none;
 }
 
 /* Navbar */
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -50,6 +46,7 @@ a {
   background-color: #3a3a3a;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   min-height: 64px; /* Tinggi minimum untuk app bar */
+  z-index: 1000;
 }
 
 .logo-text {
@@ -66,10 +63,39 @@ a {
   align-items: center;
 }
 
+/* Navbar dan Navigation */
 .nav-links {
-  display: flex;
-  gap: 2rem;
   list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    z-index: 999;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-links.open {
+    display: flex;
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    display: block;
+  }
 }
 
 .nav-links a {
@@ -92,66 +118,45 @@ a {
 /* Hamburger menu */
 .hamburger {
   display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 24px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  min-width: 44px; /* Ensure minimum size */
-  min-height: 44px; /* Ensure minimum size */
-  padding: 0.8rem;
-  background: none;
-  border: none;
-}
-
-/* Hamburger button styling */
-.hamburger {
   min-width: 44px;
   min-height: 44px;
   padding: 0.8rem;
   background: none;
   border: none;
   cursor: pointer;
-  display: none;
+  z-index: 1000;
 }
 
 .hamburger span {
+  display: block;
+  width: 25px;
   height: 3px;
+  margin: 5px 0;
   background-color: white;
-  border-radius: 2px;
-  width: 100%;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 /* Animasi untuk hamburger */
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translateY(8px);
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
 }
 
-.hamburger.active span:nth-child(2) {
+.hamburger.open span:nth-child(2) {
   opacity: 0;
 }
 
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-8px);
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
-.nav-links.active {
-  display: flex;
-  flex-direction: column;
-  background-color: #333;
-  width: 100%;
-  text-align: center;
-  padding: 1rem 0;
-  transition: max-height 0.3s ease-in-out; /* Animasi smooth saat muncul */
-  max-height: 300px; /* Batasi tinggi maksimum ketika aktif */
-  overflow: hidden; /* Menghindari content overflow */
-}
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
 
-.nav-links {
-  max-height: 0;
-  overflow: hidden; /* Sembunyikan elemen saat tidak aktif */
+  .nav-links {
+    display: flex;
+  }
 }
 
 /* Aturan media untuk layar besar */
@@ -172,28 +177,43 @@ a {
 
 /* Untuk layar kecil, sembunyikan navbar dan atur hamburger */
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
   .nav-links {
     display: none;
-    flex-direction: column; /* Susun link secara vertikal */
-    text-align: center;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    flex-direction: column;
+    align-items: center;
     padding: 1rem 0;
   }
 
   .nav-links.active {
-    display: flex; /* Tampilkan link saat hamburger aktif */
-    background-color: #333;
-    width: 100%;
-    padding: 1rem 0;
+    display: flex !important;
   }
 
-  .hamburger {
-    display: flex; /* Tampilkan hamburger pada layar kecil */
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .nav-links a {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
   }
 }
 
@@ -232,6 +252,48 @@ a {
     text-align: center;
     width: 100%;
     justify-content: center;
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    padding: 1rem 0;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-links.active {
+    display: flex !important; /* Memaksa tampil ketika active */
+  }
+
+  .hamburger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: white;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
   }
 }
 
@@ -272,7 +334,7 @@ a {
 
 .restaurant-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
   padding: 2rem;
 }

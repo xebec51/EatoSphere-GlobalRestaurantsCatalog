@@ -17,19 +17,23 @@
 
     <header>
       <nav class="navbar">
-        <div class="logo-text">
-          EatoSphere 
-        </div>
-        <ul class="nav-links">
-          <li><a href="#/">Home</a></li>
-          <li><a href="#/favorite">Favorite</a></li> 
-          <li><a href="#/about-me">About Me</a></li>
-        </ul>
-        <button class="hamburger" aria-label="Toggle Navigation">
+        <div class="logo-text">EatoSphere</div>
+        <button 
+          class="hamburger" 
+          aria-label="Toggle menu"
+          aria-controls="nav-links"
+          aria-expanded="false"
+          type="button"
+        >
           <span></span>
           <span></span>
           <span></span>
         </button>
+        <ul id="nav-links" class="nav-links">
+          <li><a href="#/">Home</a></li>
+          <li><a href="#/favorite">Favorite</a></li>
+          <li><a href="#/about-me">About Me</a></li>
+        </ul>
       </nav>
     </header>
 

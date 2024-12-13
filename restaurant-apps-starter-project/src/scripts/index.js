@@ -8,8 +8,9 @@ const mainContent = document.querySelector('#main-content');
 const hamburger = document.querySelector('.hamburger');
 const navLinks = document.querySelector('.nav-links');
 const navItems = document.querySelectorAll('.nav-links a');
+const skipLink = document.querySelector('.skip-link');
 
-let isMenuOpen = false;
+const isMenuOpen = false;
 
 // Fungsi untuk membuka koneksi ke IndexedDB
 const dbPromise = openDB('favorite-restaurants', 1, {
@@ -124,34 +125,45 @@ window.addEventListener('load', handleRouting);
 
 // Panggil fungsi handleRouting saat halaman pertama kali dimuat
 document.addEventListener('DOMContentLoaded', () => {
-  // handleRouting(); // Remove this call to avoid double routing
+  const hamburgerButton = document.querySelector('.hamburger');
+  const navigationDrawer = document.querySelector('.nav-links');
+  const mainContent = document.querySelector('#main-content');
 
-  // Fungsi untuk toggle hamburger menu
-  hamburger.addEventListener('click', () => {
-    isMenuOpen = !isMenuOpen;
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
+  // Toggle menu handler
+  hamburgerButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    hamburgerButton.classList.toggle('open');
+    navigationDrawer.classList.toggle('open');
   });
 
-  // Fungsi smooth scroll dan tutup navbar untuk setiap nav item
-  navItems.forEach((item) => {
-    item.addEventListener('click', (event) => {
-      event.preventDefault();
-      const href = item.getAttribute('href');
-      window.location.hash = href; // Update the hash to trigger routing
-      navLinks.classList.remove('active');
-      hamburger.classList.remove('active');
-      isMenuOpen = false;
-      handleRouting(); // Call handleRouting after hash change
+  // Close menu when clicking on main content
+  mainContent.addEventListener('click', () => {
+    hamburgerButton.classList.remove('open');
+    navigationDrawer.classList.remove('open');
+  });
+
+  // Close menu when clicking navigation links
+  navigationDrawer.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      hamburgerButton.classList.remove('open');
+      navigationDrawer.classList.remove('open');
     });
   });
 
-  // Tambahkan event listener untuk tombol "Favorite" di navbar
-  const favoriteNavItem = document.querySelector('a[href="#/favorite"]');  // ubah dari '#/favorit'
-  favoriteNavItem.addEventListener('click', (event) => {
-    event.preventDefault();
-    window.location.hash = '#/favorite';  // ubah dari '#/favorit'
-    handleRouting();
+  // Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    if (!hamburgerButton.contains(event.target) && !navigationDrawer.contains(event.target)) {
+      hamburgerButton.classList.remove('open');
+      navigationDrawer.classList.remove('open');
+    }
+  });
+
+  // Skip to content functionality
+  skipLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    mainContent.setAttribute('tabindex', '-1');
+    mainContent.focus();
+    mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 
