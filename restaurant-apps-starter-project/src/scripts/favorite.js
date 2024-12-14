@@ -1,5 +1,6 @@
 import { openDB } from 'idb';
 import { tampilkanDetailRestoran } from './detail'; // Import the function
+import { handleRouting } from './index'; // Import the function
 
 const dbPromise = openDB('favorite-restaurants', 1, {
   upgrade(db) {

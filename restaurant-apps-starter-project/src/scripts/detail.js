@@ -27,10 +27,11 @@ export async function tampilkanDetailRestoran(id) {
     }
   } catch (error) {
     console.error('Gagal memuat detail restoran:', error);
-    const restaurantDetailCard = document.querySelector('.restaurant-detail-card');
-    if (restaurantDetailCard) {
-      restaurantDetailCard.innerHTML = '<p>Gagal memuat detail restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
-    }
+    mainContent.innerHTML = `
+      <div class="restaurant-detail-card">
+        <p>Gagal memuat detail restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>
+      </div>
+    `;
   }
 }
 
