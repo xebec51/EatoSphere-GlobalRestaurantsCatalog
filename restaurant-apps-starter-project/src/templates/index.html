@@ -13,45 +13,46 @@
     <link rel="stylesheet" href="app.css" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+    <div class="container">
+      <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
 
-    <header>
-      <nav class="navbar">
-        <div class="logo-text">EatoSphere</div>
-        <button
-          class="hamburger"
-          aria-label="Toggle menu"
-          aria-controls="nav-links"
-          aria-expanded="false"
-          type="button"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <ul id="nav-links" class="nav-links">
-          <li><a href="#/">Home</a></li>
-          <li><a href="#/favorite">Favorite</a></li>
-          <li><a href="#/about-me">About Me</a></li>
-        </ul>
-      </nav>
-    </header>
+      <header>
+        <nav class="navbar">
+          <div class="logo-text">EatoSphere</div>
+          <button
+            class="hamburger"
+            aria-label="Toggle menu"
+            aria-controls="nav-links"
+            aria-expanded="false"
+            type="button"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <ul id="nav-links" class="nav-links">
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/favorite">Favorite</a></li>
+            <li><a href="#/about-me">About Me</a></li>
+          </ul>
+        </nav>
+      </header>
 
-    <section class="hero">
-      <picture>
-        <source srcset="images/optimized/hero-image_1.webp" type="image/webp">
-        <img src="images/heros/hero-image_1.jpg" alt="Hero image showing delicious food" class="hero-img">
-      </picture>
-      <div class="hero-text">
-        <h1>Welcome to EatoSphere</h1>
-        <p>Explore the world of flavors, one bite at a time.</p>
-      </div>
-    </section>
+      <section class="hero">
+        <picture>
+          <source srcset="images/optimized/hero-image_1.webp" type="image/webp">
+          <img src="images/heros/hero-image_1.jpg" alt="Hero image showing delicious food" class="hero-img">
+        </picture>
+        <div class="hero-text">
+          <h1>Welcome to EatoSphere</h1>
+          <p>Explore the world of flavors, one bite at a time.</p>
+        </div>
+      </section>
 
-    <main id="main-content" tabindex="-1">
-      <!-- Content will be loaded here -->
-    </main>
-
+      <main id="main-content" tabindex="-1">
+        <!-- Content will be loaded here -->
+      </main>
+    </div>
     <footer>
       <p>Copyright © 2024 - EatoSphere</p>
     </footer>

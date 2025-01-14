@@ -6,6 +6,9 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
   line-height: 1.6;
   background-color: #f4f4f4;
@@ -687,6 +690,7 @@ footer {
   position: relative;
   bottom: 0;
   width: 100%;
+  margin-top: auto;
 }
 
 /* Smooth scroll for whole page */
@@ -932,4 +936,10 @@ html {
   .restaurant-image {
     max-height: 300px;
   }
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
