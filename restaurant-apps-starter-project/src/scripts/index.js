@@ -23,19 +23,23 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 async function tampilkanDaftarRestoran() {
   try {
     const cache = await caches.open('restaurant-list');
-    const cachedResponse = await cache.match('/api/list'); // Update URL to use proxy
+    const apiUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://restaurant-api.dicoding.dev/list' 
+      : '/api/list'; // Gunakan URL lengkap di lingkungan produksi
+
+    const cachedResponse = await cache.match(apiUrl);
 
     if (cachedResponse) {
       const data = await cachedResponse.json();
       renderRestaurants(data.restaurants);
     } else {
-      const response = await fetch('/api/list'); // Update URL to use proxy
+      const response = await fetch(apiUrl); // Gunakan URL lengkap di lingkungan produksi
       if (!response.ok) throw new Error('Failed to fetch restaurant list.');
       const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();
       renderRestaurants(data.restaurants);
       // Cache response
-      cache.put('/api/list', clonedResponse);
+      cache.put(apiUrl, clonedResponse);
     }
   } catch (error) {
     console.error('Gagal memuat daftar restoran:', error);
