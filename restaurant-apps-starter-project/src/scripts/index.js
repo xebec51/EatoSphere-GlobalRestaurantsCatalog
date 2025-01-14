@@ -3,7 +3,6 @@ import { openDB } from 'idb';
 import '../styles/main.css';
 import { tampilkanRestoranFavorit } from './favorite.js';
 import { tampilkanDetailRestoran } from './detail.js'; // Import the function
-import swRegister from './swregister.js'; // Import swRegister
 
 const mainContent = document.querySelector('#main-content');
 const hamburger = document.querySelector('.hamburger');
@@ -190,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
-  swRegister(); // Call swRegister to register the service worker
+  import('./swregister.js').then((module) => module.default()); // Lazy load swRegister
 });
 
 // Daftarkan service worker hanya di lingkungan produksi

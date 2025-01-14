@@ -7,7 +7,7 @@ async function optimizeImages() {
       destination: 'src/public/images/optimized',
       plugins: [
         imageminWebp({
-          quality: 50, // Kurangi kualitas untuk mengurangi ukuran
+          quality: 30, // Menurunkan kualitas untuk ukuran lebih kecil
         }),
       ],
     });
