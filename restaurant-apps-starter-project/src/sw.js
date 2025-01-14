@@ -96,6 +96,7 @@ self.addEventListener('activate', (event) => {
     'restaurant-images',
     'static-assets',
     'pages',
+    'eatosphere-cache', // Ensure the new cache ID is included
   ];
 
   event.waitUntil(

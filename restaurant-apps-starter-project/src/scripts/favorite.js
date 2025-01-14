@@ -31,7 +31,13 @@ export async function tampilkanRestoranFavorit() {
   const restaurantList = document.querySelector('.restaurant-list');
 
   if (allSavedRestaurants.length === 0) {
-    restaurantList.innerHTML = '<p>Tidak ada restoran favorit yang ditemukan.</p>';
+    mainContent.innerHTML = `
+      <div class="no-restaurants-message">
+        <img src="images/no-data.svg" alt="No data" class="no-data-image">
+        <h2>Tidak Ada Restoran Favorit</h2>
+        <p>Anda belum menambahkan restoran ke daftar favorit.</p>
+      </div>
+    `;
   } else {
     allSavedRestaurants.forEach((restaurant) => {
       const restaurantItem = document.createElement('div');

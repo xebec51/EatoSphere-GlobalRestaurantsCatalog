@@ -53,24 +53,20 @@ export default {
     new CopyWebpackPlugin({
       patterns: [
         {
+          from: path.resolve('src/public/manifest.json'),
+          to: 'manifest.json',
+        },
+        {
           from: path.resolve('src/public/'),
           to: path.resolve('dist/'),
         },
       ],
     }),
     new WorkboxWebpackPlugin.GenerateSW({
-      swDest: 'sw.bundle.js', // Ensure the service worker file is named sw.bundle.js
+      swDest: 'sw.js', // Ensure the service worker file is named sw.js
       clientsClaim: true,
       skipWaiting: true,
-      runtimeCaching: [
-        {
-          urlPattern: ({ url }) => url.origin === 'https://restaurant-api.dicoding.dev',
-          handler: 'StaleWhileRevalidate',
-          options: {
-            cacheName: 'restaurant-api',
-          }
-        }
-      ]
+      cacheId: 'eatosphere-cache', // Unique cache ID
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',

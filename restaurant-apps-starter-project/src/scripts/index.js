@@ -51,6 +51,7 @@ function renderRestaurants(restaurants) {
   if (restaurants.length === 0) {
     mainContent.innerHTML = `
       <div class="no-restaurants-message">
+        <img src="images/no-data.svg" alt="No data" class="no-data-image">
         <h2>Tidak Ada Restoran</h2>
         <p>Maaf, tidak ada restoran yang ditemukan.</p>
       </div>

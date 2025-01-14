@@ -970,4 +970,10 @@ html {
   color: #666;
 }
 
+.no-data-image {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1rem;
+}
+
 /* ...existing code... */

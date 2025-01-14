@@ -6,14 +6,14 @@ const swRegister = async () => {
     return;
   }
 
-  const wb = new Workbox('/sw.bundle.js'); // Ensure the path is correct
+  const wb = new Workbox('/sw.js'); // Ensure the path is correct
 
   wb.addEventListener('installed', (event) => {
     if (event.isUpdate) {
       console.log('Service Worker updated. Clearing old cache...');
       caches.keys().then((cacheNames) => {
         cacheNames.forEach((cacheName) => {
-          if (cacheName !== 'restaurant-api') {
+          if (cacheName !== 'eatosphere-cache') {
             console.log(`Deleting cache: ${cacheName}`);
             caches.delete(cacheName).then((success) => {
               if (success) {
