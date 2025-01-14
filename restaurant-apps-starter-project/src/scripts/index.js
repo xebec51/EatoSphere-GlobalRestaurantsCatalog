@@ -23,9 +23,7 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 async function tampilkanDaftarRestoran() {
   try {
     const cache = await caches.open('restaurant-list');
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://restaurant-api.dicoding.dev/list' 
-      : '/api/list'; // Gunakan URL lengkap di lingkungan produksi
+    const apiUrl = 'https://restaurant-api.dicoding.dev/list'; // Gunakan URL lengkap di semua lingkungan
 
     const cachedResponse = await cache.match(apiUrl);
 
@@ -33,7 +31,7 @@ async function tampilkanDaftarRestoran() {
       const data = await cachedResponse.json();
       renderRestaurants(data.restaurants);
     } else {
-      const response = await fetch(apiUrl); // Gunakan URL lengkap di lingkungan produksi
+      const response = await fetch(apiUrl); // Gunakan URL lengkap di semua lingkungan
       if (!response.ok) throw new Error('Failed to fetch restaurant list.');
       const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();

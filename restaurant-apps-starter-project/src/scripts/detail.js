@@ -13,16 +13,14 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 export async function tampilkanDetailRestoran(id) {
   try {
     const cache = await caches.open('restaurant-detail');
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? `https://restaurant-api.dicoding.dev/detail/${id}` 
-      : `/api/detail/${id}`; // Gunakan URL lengkap di lingkungan produksi
+    const apiUrl = `https://restaurant-api.dicoding.dev/detail/${id}`; // Gunakan URL lengkap di semua lingkungan
 
     const cachedResponse = await cache.match(apiUrl);
     if (cachedResponse) {
       const data = await cachedResponse.json();
       displayRestaurantDetail(data.restaurant);
     } else {
-      const response = await fetch(apiUrl); // Gunakan URL lengkap di lingkungan produksi
+      const response = await fetch(apiUrl); // Gunakan URL lengkap di semua lingkungan
       if (!response.ok) throw new Error('Failed to fetch restaurant detail.');
       const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();
