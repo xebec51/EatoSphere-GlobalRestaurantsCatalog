@@ -21,6 +21,10 @@
   "author": "Muh. Rinaldi Ruslan <rinaldi.ruslan51@gmail.com>",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
+  },
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
