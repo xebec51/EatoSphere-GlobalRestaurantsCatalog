@@ -1,4 +1,4 @@
-# Submission Kedua Menjadi Front-End Web Developer Expert Dicoding
+# Submission Menjadi Front-End Web Developer Expert Dicoding
 
 ## Deskripsi Singkat
 
