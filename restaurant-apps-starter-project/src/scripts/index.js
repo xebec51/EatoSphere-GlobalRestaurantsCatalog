@@ -38,14 +38,26 @@ async function tampilkanDaftarRestoran() {
     }
   } catch (error) {
     console.error('Gagal memuat daftar restoran:', error);
-    const restaurantList = document.querySelector('.restaurant-list');
-    if (restaurantList) {
-      restaurantList.innerHTML = '<p>Gagal memuat daftar restoran. Anda sedang offline. Silakan periksa koneksi internet Anda.</p>';
-    }
+    mainContent.innerHTML = `
+      <div class="error-message">
+        <h2>Gagal Memuat Daftar Restoran</h2>
+        <p>Anda sedang offline. Silakan periksa koneksi internet Anda.</p>
+      </div>
+    `;
   }
 }
 
 function renderRestaurants(restaurants) {
+  if (restaurants.length === 0) {
+    mainContent.innerHTML = `
+      <div class="no-restaurants-message">
+        <h2>Tidak Ada Restoran</h2>
+        <p>Maaf, tidak ada restoran yang ditemukan.</p>
+      </div>
+    `;
+    return;
+  }
+
   mainContent.innerHTML = '<div class="restaurant-list"></div>';
   const restaurantList = document.querySelector('.restaurant-list');
   restaurants.forEach((restaurant) => {
