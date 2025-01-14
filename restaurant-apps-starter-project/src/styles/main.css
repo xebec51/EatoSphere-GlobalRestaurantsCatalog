@@ -977,3 +977,12 @@ html {
 }
 
 /* ...existing code... */
+
+.input-error {
+  display: none;
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* ...existing code... */

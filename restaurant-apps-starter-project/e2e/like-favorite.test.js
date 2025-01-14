@@ -20,6 +20,7 @@ test.describe('Favorite Restaurants E2E Test', () => {
     const restaurantDetailLink = page.locator('.restaurant-card .restaurant-detail-link').first();
     await restaurantDetailLink.waitFor({ state: 'attached' });
     await restaurantDetailLink.waitFor({ state: 'visible' });
+    await page.waitForTimeout(500); // Penundaan 500ms untuk memastikan elemen stabil
     await restaurantDetailLink.click();
 
     console.log('Waiting for the detail page to load...');
@@ -43,21 +44,24 @@ test.describe('Favorite Restaurants E2E Test', () => {
     const favoriteRestaurantLink = page.locator('.restaurant-card .restaurant-detail-link').first();
     await favoriteRestaurantLink.waitFor({ state: 'attached' });
     await favoriteRestaurantLink.waitFor({ state: 'visible' });
+    await page.waitForTimeout(500); // Penundaan 500ms untuk memastikan elemen stabil
     await favoriteRestaurantLink.click();
 
     console.log('Waiting for the detail page to load...');
     await page.waitForSelector('#favoriteButton', { timeout: 30000 });
 
     console.log('Removing the restaurant from favorites...');
-    await favoriteButton.click();
-    const buttonTextAfterRemove = (await favoriteButton.textContent()).trim();
+    const favoriteButtonDetail = page.locator('#favoriteButton');
+    await favoriteButtonDetail.click();
+    const buttonTextAfterRemove = (await favoriteButtonDetail.textContent()).trim();
     expect(buttonTextAfterRemove).toBe('Tambahkan ke Favorit');
 
     console.log('Navigating back to the favorites page...');
     await page.goto('http://localhost:8080/#/favorite');
 
     console.log('Ensuring the favorites list is empty...');
-    const noFavoritesMessage = page.locator('text=Tidak ada restoran favorit yang ditemukan.');
+    const noFavoritesMessage = page.locator('.no-restaurants-message');
+    await noFavoritesMessage.waitFor({ state: 'attached' }); // Tunggu elemen ada di DOM
     await expect(noFavoritesMessage).toBeVisible();
 
     console.log('Test completed successfully.');

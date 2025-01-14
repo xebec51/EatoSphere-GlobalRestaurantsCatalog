@@ -132,6 +132,7 @@ async function displayRestaurantDetail(restaurant) {
                       minlength="3"
                       placeholder="Masukkan nama Anda"
                   >
+                  <small class="input-error" id="nameError">Nama harus terdiri dari minimal 3 karakter.</small>
                 </div>
                 <div class="form-group">
                   <label for="review">Ulasan</label>
@@ -143,6 +144,7 @@ async function displayRestaurantDetail(restaurant) {
                       minlength="10"
                       placeholder="Bagikan pengalaman Anda tentang restoran ini"
                   ></textarea>
+                  <small class="input-error" id="reviewError">Ulasan harus terdiri dari minimal 10 karakter.</small>
                 </div>
                 <button type="submit" class="submit-review-button" disabled>
                   Kirim Ulasan
@@ -181,10 +183,13 @@ function setupReviewForm(restaurant) {
     const successMessage = document.getElementById('reviewSuccess');
     const errorMessage = document.getElementById('reviewError');
     const reviewsContainer = document.querySelector('.reviews');
+    const nameError = document.getElementById('nameError');
+    const reviewError = document.getElementById('reviewError');
 
     function validateForm() {
       const isNameValid = nameInput.value.length >= 3;
       const isReviewValid = reviewInput.value.length >= 10;
+
       submitButton.disabled = !(isNameValid && isReviewValid);
     }
 
@@ -195,6 +200,18 @@ function setupReviewForm(restaurant) {
       event.preventDefault();
       submitButton.disabled = true;
       submitButton.textContent = 'Mengirim...';
+
+      const isNameValid = nameInput.value.length >= 3;
+      const isReviewValid = reviewInput.value.length >= 10;
+
+      nameError.style.display = isNameValid ? 'none' : 'block';
+      reviewError.style.display = isReviewValid ? 'none' : 'block';
+
+      if (!isNameValid || !isReviewValid) {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Kirim Ulasan';
+        return;
+      }
 
       try {
         const response = await fetch('https://restaurant-api.dicoding.dev/review', {

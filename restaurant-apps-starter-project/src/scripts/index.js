@@ -23,25 +23,26 @@ const dbPromise = openDB('favorite-restaurants', 1, {
 async function tampilkanDaftarRestoran() {
   try {
     const cache = await caches.open('restaurant-list');
-    const cachedResponse = await cache.match('https://restaurant-api.dicoding.dev/list');
+    const cachedResponse = await cache.match('/api/list'); // Update URL to use proxy
 
     if (cachedResponse) {
       const data = await cachedResponse.json();
       renderRestaurants(data.restaurants);
     } else {
-      const response = await fetch('https://restaurant-api.dicoding.dev/list');
+      const response = await fetch('/api/list'); // Update URL to use proxy
+      if (!response.ok) throw new Error('Failed to fetch restaurant list.');
       const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();
       renderRestaurants(data.restaurants);
       // Cache response
-      cache.put('https://restaurant-api.dicoding.dev/list', clonedResponse);
+      cache.put('/api/list', clonedResponse);
     }
   } catch (error) {
     console.error('Gagal memuat daftar restoran:', error);
     mainContent.innerHTML = `
       <div class="error-message">
         <h2>Gagal Memuat Daftar Restoran</h2>
-        <p>Anda sedang offline. Silakan periksa koneksi internet Anda.</p>
+        <p>Anda sedang offline atau terjadi masalah dengan server. Silakan periksa koneksi internet Anda.</p>
       </div>
     `;
   }
