@@ -32,6 +32,18 @@ export default {
       },
     ],
   },
+  optimization: {
+    splitChunks: {
+      chunks: 'all', // Pisahkan semua kode (async dan sync)
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
