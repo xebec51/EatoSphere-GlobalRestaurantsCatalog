@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-import { cekRestoranFavorit } from './favorite';
+import { cekRestoranFavorit } from './favorite.js';
 const mainContent = document.querySelector('#main-content');
 
 // Fungsi untuk membuka koneksi ke IndexedDB
@@ -19,6 +19,7 @@ export async function tampilkanDetailRestoran(id) {
       displayRestaurantDetail(data.restaurant);
     } else {
       const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${id}`);
+      if (!response.ok) throw new Error('Failed to fetch restaurant detail.');
       const clonedResponse = response.clone(); // Clone the response before consuming it
       const data = await response.json();
       displayRestaurantDetail(data.restaurant);
@@ -169,9 +170,6 @@ async function displayRestaurantDetail(restaurant) {
     mainContent.innerHTML = '<p>Terjadi kesalahan saat menampilkan detail restoran.</p>';
   }
 }
-
-// Fungsi untuk menangani klik tombol favorit
-// (This function is already declared earlier in the code)
 
 // Fungsi untuk mengatur form ulasan - tambahkan fungsi baru untuk memisahkan logika
 function setupReviewForm(restaurant) {

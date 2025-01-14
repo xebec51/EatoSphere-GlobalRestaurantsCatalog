@@ -4,9 +4,10 @@
  */
 
 /** @type {import('jest').Config} */
-const config = {
+export default {
   testMatch: [
     '**/tests/**/*.test.[jt]s?(x)',
+    '!**/tests/e2e/**', // Exclude Playwright tests
   ],
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
@@ -20,5 +21,3 @@ const config = {
     '^.+\\.(js|ts)$': 'babel-jest',
   },
 };
-
-module.exports = config;

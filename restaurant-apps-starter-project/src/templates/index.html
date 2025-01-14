@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="EatoSphere - Global Restaurants Catalog" />
     <title>EatoSphere - Global Restaurants</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <link rel="stylesheet" href="app.css"> <!-- Tambahkan ini untuk merujuk file CSS -->
+    <link rel="stylesheet" href="app.css" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
@@ -18,8 +18,8 @@
     <header>
       <nav class="navbar">
         <div class="logo-text">EatoSphere</div>
-        <button 
-          class="hamburger" 
+        <button
+          class="hamburger"
           aria-label="Toggle menu"
           aria-controls="nav-links"
           aria-expanded="false"
@@ -38,14 +38,24 @@
     </header>
 
     <section class="hero">
-      <img src="images/heros/hero-image_1.jpg" alt="Hero image showing delicious food" class="hero-img" />
+      <picture>
+        <!-- WebP version for optimized performance -->
+        <source
+          srcset="images/optimized/hero-image_1.webp"
+          type="image/webp"
+        />
+        <!-- Fallback to JPG for older browsers -->
+        <img
+          src="images/heros/hero-image_1.jpg"
+          alt="Hero image showing delicious food"
+          class="hero-img"
+        />
+      </picture>
       <div class="hero-text">
         <h1>Welcome to EatoSphere</h1>
         <p>Explore the world of flavors, one bite at a time.</p>
       </div>
     </section>
-
-    <!-- Hapus atau sesuaikan navigationDrawer karena sudah ada di navbar -->
 
     <main id="main-content" tabindex="-1">
       <!-- Content will be loaded here -->

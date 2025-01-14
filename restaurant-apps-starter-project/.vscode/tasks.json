@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "echo",
+			"type": "shell",
+			"command": "echo Hello",
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "e2e",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: e2e",
+			"presentation": {
+				"reveal": "silent"
+			}
+		}
+	]
+}

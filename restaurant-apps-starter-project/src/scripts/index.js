@@ -1,9 +1,9 @@
 import 'regenerator-runtime'; /* for async await transpile */
 import { openDB } from 'idb';
 import '../styles/main.css';
-import { tampilkanRestoranFavorit } from './favorite';
-import { tampilkanDetailRestoran } from './detail'; // Import the function
-import swRegister from './swregister'; // Import swRegister
+import { tampilkanRestoranFavorit } from './favorite.js';
+import { tampilkanDetailRestoran } from './detail.js'; // Import the function
+import swRegister from './swregister.js'; // Import swRegister
 
 const mainContent = document.querySelector('#main-content');
 const hamburger = document.querySelector('.hamburger');

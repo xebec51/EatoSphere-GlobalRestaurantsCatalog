@@ -1,37 +1,40 @@
-const { merge } = require('webpack-merge');
-const path = require('path');
-const common = require('./webpack.common');
-const webpack = require('webpack');
+import { merge } from 'webpack-merge';
+import path from 'path';
+import common from './webpack.common.js';
+import webpack from 'webpack';
 
-module.exports = merge(common, {
+export default merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    static: path.resolve(__dirname, 'dist'),
+    static: {
+      directory: path.resolve('dist'),
+    },
     open: true,
     compress: true,
-    hot: true,
-    // Remove the port configuration to use the default port
+    hot: true, // Aktifkan HMR
+    port: 8080, // Pastikan menggunakan port default atau sesuaikan
     client: {
       overlay: {
-        errors: true,
+        errors: true, // Tampilkan error di overlay browser
         warnings: false,
       },
     },
-    watchFiles: ['src/**/*'],
+    watchFiles: ['src/**/*'], // Batasi pantauan hanya pada folder src
     proxy: {
       '/api': {
         target: 'https://restaurant-api.dicoding.dev',
         changeOrigin: true,
-        secure: false, // Add this line to handle self-signed certificates
+        secure: false, // Tangani sertifikat self-signed
         pathRewrite: {
-          '^/api': '',
+          '^/api': '', // Hapus prefix '/api'
         },
         onError(err, req, res) {
+          console.error('Proxy error:', err);
           res.writeHead(500, {
             'Content-Type': 'text/plain',
           });
-          res.end('Something went wrong. And we are reporting a custom error message.');
+          res.end('Proxy encountered an error.');
         },
       },
     },

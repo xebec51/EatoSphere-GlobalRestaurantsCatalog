@@ -10,10 +10,19 @@ const swRegister = async () => {
 
   wb.addEventListener('installed', (event) => {
     if (event.isUpdate) {
-      // Clear cache when a new service worker is installed
+      console.log('Service Worker updated. Clearing old cache...');
       caches.keys().then((cacheNames) => {
         cacheNames.forEach((cacheName) => {
-          caches.delete(cacheName); // Delete old caches
+          if (cacheName !== 'restaurant-api') {
+            console.log(`Deleting cache: ${cacheName}`);
+            caches.delete(cacheName).then((success) => {
+              if (success) {
+                console.log(`Cache ${cacheName} deleted successfully`);
+              } else {
+                console.log(`Failed to delete cache ${cacheName}`);
+              }
+            });
+          }
         });
       });
     }
