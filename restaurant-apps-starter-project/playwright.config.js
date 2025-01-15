@@ -1,23 +1,61 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  // Direktori file pengujian
-  testDir: './tests/e2e', // Sesuaikan dengan lokasi file pengujian Anda
-  testMatch: '**/*.test.js', // Jalankan hanya file dengan ekstensi .test.js
-  timeout: 60000, // Timeout maksimum untuk setiap pengujian
-  retries: 2, // Ulangi pengujian hingga 2 kali jika gagal
+  testDir: './tests/e2e',
+  testMatch: '**/*.test.js',
+  timeout: 60000,
+  retries: 2,
   use: {
-    headless: true, // Jalankan browser dalam mode headless
-    baseURL: 'http://localhost:8080', // Base URL untuk aplikasi Anda
-    video: 'on-first-retry', // Rekam video hanya pada pengulangan pertama
-    screenshot: 'only-on-failure', // Ambil screenshot hanya jika pengujian gagal
-    viewport: { width: 1280, height: 720 }, // Ukuran viewport default
-    ignoreHTTPSErrors: true, // Abaikan kesalahan HTTPS jika ada
+    headless: true,
+    baseURL: 'http://localhost:8080',
+    viewport: { width: 1280, height: 720 },
+    trace: 'off',
+    video: 'off',
+    screenshot: 'off',
   },
-  expect: {
-    timeout: 5000, // Timeout per assertion (ms)
+  reporter: 'line',
+  hooks: {
+    async beforeEach({ page }) {
+      // Nonaktifkan Service Worker
+      await page.addInitScript(() => {
+        navigator.serviceWorker?.getRegistrations().then((registrations) => {
+          for (const registration of registrations) {
+            registration.unregister();
+          }
+        });
+      });
+
+      // Route untuk data mock daftar restoran
+      await page.route('**/restaurant-api.dicoding.dev/list', (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            restaurants: [
+              { id: 'r1', name: 'Mock Restaurant', city: 'Mock City', rating: 4.5, pictureId: 'mock-img' },
+            ],
+          }),
+        })
+      );
+
+      // Route untuk data mock detail restoran
+      await page.route('**/restaurant-api.dicoding.dev/detail/*', (route) =>
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            restaurant: {
+              id: 'r1',
+              name: 'Mock Restaurant',
+              city: 'Mock City',
+              rating: 4.5,
+              pictureId: 'mock-img',
+              menus: { foods: [{ name: 'Mock Food' }], drinks: [{ name: 'Mock Drink' }] },
+              customerReviews: [],
+            },
+          }),
+        })
+      );
+    },
   },
-  fullyParallel: true, // Jalankan pengujian secara paralel
-  workers: 4, // Maksimum jumlah worker
-  reporter: [['list'], ['html', { outputFolder: 'test-results' }]], // Gunakan reporter bawaan dan laporan HTML
 });

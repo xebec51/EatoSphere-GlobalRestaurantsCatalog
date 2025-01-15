@@ -30,6 +30,7 @@ async function tampilkanDaftarRestoran() {
     if (cachedResponse) {
       const data = await cachedResponse.json();
       renderRestaurants(data.restaurants);
+      console.log('List loaded from cache');
     } else {
       const response = await fetch(apiUrl); // Gunakan URL lengkap di semua lingkungan
       if (!response.ok) throw new Error('Failed to fetch restaurant list.');
@@ -38,6 +39,7 @@ async function tampilkanDaftarRestoran() {
       renderRestaurants(data.restaurants);
       // Cache response
       cache.put(apiUrl, clonedResponse);
+      console.log('List loaded from API and cached');
     }
   } catch (error) {
     console.error('Gagal memuat daftar restoran:', error);
@@ -54,7 +56,7 @@ function renderRestaurants(restaurants) {
   if (restaurants.length === 0) {
     mainContent.innerHTML = `
       <div class="no-restaurants-message">
-        <img src="images/no-data.svg" alt="No data" class="no-data-image">
+        <img src="images/placeholder.jpeg" alt="No data" class="no-data-image">
         <h2>Tidak Ada Restoran</h2>
         <p>Maaf, tidak ada restoran yang ditemukan.</p>
       </div>
@@ -68,7 +70,10 @@ function renderRestaurants(restaurants) {
     const restaurantItem = document.createElement('div');
     restaurantItem.className = 'restaurant-card';
     restaurantItem.innerHTML = `
-      <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="Image of ${restaurant.name}">
+      <img 
+        src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" 
+        alt="Image of ${restaurant.name}" 
+        loading="lazy">
       <div class="restaurant-info">
         <h3>${restaurant.name}</h3>
         <p>Kota: ${restaurant.city}</p>
@@ -206,6 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   import('./swregister.js').then((module) => module.default()); // Lazy load swRegister
+
+  if (window.location.hash === '#/favorite') {
+    import(/* webpackPrefetch: true */ './favorite.js')
+      .then(({ tampilkanRestoranFavorit }) => tampilkanRestoranFavorit())
+      .catch((error) => console.error('Error loading favorite module:', error));
+  }
 });
 
 // Daftarkan service worker hanya di lingkungan produksi

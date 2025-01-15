@@ -16,7 +16,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 7 * 24 * 60 * 60, // Cache 7 hari
+        maxAgeSeconds: 7 * 24 * 60 * 60,
       }),
     ],
   })
@@ -30,7 +30,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 7 * 24 * 60 * 60, // Cache 7 hari
+        maxAgeSeconds: 7 * 24 * 60 * 60,
       }),
     ],
   })
@@ -44,7 +44,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 100,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // Cache 30 hari
+        maxAgeSeconds: 30 * 24 * 60 * 60,
       }),
     ],
   })
@@ -66,16 +66,30 @@ registerRoute(
   })
 );
 
+// Cache gambar hero dengan strategi CacheFirst
+registerRoute(
+  ({ url }) => url.pathname.startsWith('/images/heros/'),
+  new CacheFirst({
+    cacheName: 'hero-images',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 10,
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+      }),
+    ],
+  })
+);
+
 // Tangani fallback untuk sumber daya yang gagal dimuat
 setCatchHandler(async ({ event }) => {
   if (event.request.destination === 'image') {
-    // Gambar fallback
+    console.log('Serving fallback image for:', event.request.url);
     return caches.match('/images/fallback.png');
   }
 
-  // Fallback untuk navigasi
   if (event.request.mode === 'navigate') {
-    return caches.match('/');
+    console.log('Serving fallback page for offline navigation.');
+    return caches.match('/index.html');
   }
 
   return Response.error();
@@ -83,20 +97,38 @@ setCatchHandler(async ({ event }) => {
 
 // Event install untuk memastikan service worker baru langsung aktif
 self.addEventListener('install', (event) => {
-  console.log('Service worker installing...');
-  event.waitUntil(self.skipWaiting());
+  console.log('Service Worker installing...');
+  event.waitUntil(
+    caches.open('restaurant-cache-v1').then(async (cache) => {
+      console.log('Pre-caching essential assets...');
+      try {
+        await cache.addAll([
+          '/',
+          '/index.html',
+          '/manifest.json',
+          '/images/heros/hero-image-large.jpg',
+          '/images/heros/hero-image-small.jpg',
+        ]);
+        console.log('Assets pre-cached successfully.');
+      } catch (error) {
+        console.error('Failed to cache assets during install:', error);
+      }
+    })
+  );
+  self.skipWaiting(); // Pastikan SW baru langsung aktif
 });
 
 // Event activate untuk membersihkan cache lama
 self.addEventListener('activate', (event) => {
-  console.log('Service worker activating...');
+  console.log('Service Worker activating...');
   const cacheWhitelist = [
     'restaurant-list',
     'restaurant-detail',
     'restaurant-images',
     'static-assets',
     'pages',
-    'eatosphere-cache-v2', // Ensure the new cache ID is included
+    'hero-images',
+    'restaurant-cache-v1',
   ];
 
   event.waitUntil(
@@ -111,7 +143,7 @@ self.addEventListener('activate', (event) => {
       )
     ).then(() => {
       console.log('Old caches deleted. Claiming clients...');
-      return self.clients.claim();
+      return self.clients.claim(); // Pastikan SW mengontrol halaman
     })
   );
 });

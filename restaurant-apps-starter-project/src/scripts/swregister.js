@@ -13,7 +13,7 @@ const swRegister = async () => {
       console.log('Service Worker updated. Clearing old cache...');
       caches.keys().then((cacheNames) => {
         cacheNames.forEach((cacheName) => {
-          if (cacheName !== 'eatosphere-cache') {
+          if (!cacheName.startsWith('eatosphere-cache')) {
             console.log(`Deleting cache: ${cacheName}`);
             caches.delete(cacheName).then((success) => {
               if (success) {
@@ -30,10 +30,34 @@ const swRegister = async () => {
 
   try {
     await wb.register();
-    console.log('Service worker registered');
+    console.log('Service Worker registered successfully.');
   } catch (error) {
-    console.log('Failed to register service worker', error);
+    console.error('Failed to register Service Worker:', error);
   }
 };
+
+// Add to Home Screen (A2HS) handling
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  deferredPrompt = event;
+  console.log('Install prompt triggered.');
+
+  // Tampilkan tombol Add to Home Screen di UI
+  const a2hsButton = document.getElementById('a2hsButton');
+  if (a2hsButton) {
+    a2hsButton.style.display = 'block'; // Show the button
+    a2hsButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response to A2HS: ${outcome}`);
+        deferredPrompt = null;
+        a2hsButton.style.display = 'none'; // Hide the button after prompt
+      }
+    });
+  }
+});
 
 export default swRegister;

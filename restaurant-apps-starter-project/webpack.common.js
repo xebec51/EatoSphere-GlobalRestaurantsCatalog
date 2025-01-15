@@ -10,7 +10,7 @@ export default {
     app: path.resolve('src/scripts/index.js'),
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash].bundle.js',
     path: path.resolve('dist'),
     clean: true,
   },
@@ -24,52 +24,94 @@ export default {
         ],
       },
       {
-        test: /\.(png|jpg|jpeg|gif|webp)$/i, // Tambahkan 'webp'
+        test: /\.(png|jpg|jpeg|gif|webp|svg)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[name][ext]', // Simpan gambar di folder dist/images
+          filename: 'images/[name].[contenthash][ext]',
+        },
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'fonts/[name].[contenthash][ext]',
         },
       },
     ],
   },
   optimization: {
     splitChunks: {
-      chunks: 'all', // Pisahkan semua kode (async dan sync)
+      chunks: 'all',
+      minSize: 20000,
+      maxSize: 70000,
       cacheGroups: {
-        vendors: {
+        defaultVendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },
+  },
+  devServer: {
+    static: {
+      directory: path.resolve('dist'),
+    },
+    compress: true,
+    port: 8080,
+    hot: false,
+    liveReload: false,
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve('src/templates/index.html'),
+      inject: true, // Sisipkan file CSS dan JS secara otomatis
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: path.resolve('src/public/manifest.json'),
-          to: 'manifest.json',
-        },
-        {
-          from: path.resolve('src/public/'),
-          to: path.resolve('dist/'),
-        },
+        { from: path.resolve('src/public/manifest.json'), to: 'manifest.json' },
+        { from: path.resolve('src/public/'), to: path.resolve('dist/') },
+        { from: path.resolve('src/sw.js'), to: 'sw.js' }, // Pastikan sw.js disalin ke dist
       ],
     }),
-    new WorkboxWebpackPlugin.GenerateSW({
-      swDest: 'sw.js', // Ensure the service worker file is named sw.js
-      clientsClaim: true,
-      skipWaiting: true,
-      cacheId: 'eatosphere-cache', // Unique cache ID
-    }),
+    ...(process.env.NODE_ENV === 'production'
+      ? [
+        new WorkboxWebpackPlugin.GenerateSW({
+          swDest: 'sw.js',
+          clientsClaim: true,
+          skipWaiting: true,
+          cleanupOutdatedCaches: true,
+          runtimeCaching: [
+            {
+              urlPattern: /\.(?:png|jpg|jpeg|svg|webp)$/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'image-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 30 * 24 * 60 * 60,
+                },
+              },
+            },
+            {
+              urlPattern: /\.(?:css|js|html)$/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'static-resources',
+              },
+            },
+          ],
+        }),
+      ]
+      : []),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: '[name].[contenthash].css',
     }),
   ],
 };

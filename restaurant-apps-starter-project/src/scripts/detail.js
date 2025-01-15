@@ -19,6 +19,7 @@ export async function tampilkanDetailRestoran(id) {
     if (cachedResponse) {
       const data = await cachedResponse.json();
       displayRestaurantDetail(data.restaurant);
+      console.log('Detail loaded from cache');
     } else {
       const response = await fetch(apiUrl); // Gunakan URL lengkap di semua lingkungan
       if (!response.ok) throw new Error('Failed to fetch restaurant detail.');
@@ -27,6 +28,7 @@ export async function tampilkanDetailRestoran(id) {
       displayRestaurantDetail(data.restaurant);
       // Cache response
       cache.put(apiUrl, clonedResponse);
+      console.log('Detail loaded from API and cached');
     }
   } catch (error) {
     console.error('Gagal memuat detail restoran:', error);

@@ -33,7 +33,7 @@ export async function tampilkanRestoranFavorit() {
   if (allSavedRestaurants.length === 0) {
     mainContent.innerHTML = `
       <div class="no-restaurants-message">
-        <img src="images/no-data.svg" alt="No data" class="no-data-image">
+        <img src="images/placeholder.jpeg" alt="No data" class="no-data-image">
         <h2>Tidak Ada Restoran Favorit</h2>
         <p>Anda belum menambahkan restoran ke daftar favorit.</p>
       </div>

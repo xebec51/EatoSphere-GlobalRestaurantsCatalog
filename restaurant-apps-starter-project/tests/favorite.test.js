@@ -73,4 +73,35 @@ describe('Favorite Restaurants Integration Test', () => {
 
     expect(allRestaurants).toEqual([]);
   });
+
+  // Tambahkan pengujian untuk skenario kesalahan
+  it('should return undefined if trying to get a non-existent restaurant', async () => {
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const result = await tx.objectStore(STORE_NAME).get('non-existent-id');
+    await tx.done;
+    expect(result).toBeUndefined();
+  });
+
+  // Tambahkan pengujian untuk memastikan data tetap utuh setelah beberapa operasi
+  it('should retain data integrity after multiple operations', async () => {
+    const tx1 = db.transaction(STORE_NAME, 'readwrite');
+    const restaurant1 = { id: 'r4', name: 'Restaurant 4' };
+    await tx1.objectStore(STORE_NAME).put(restaurant1);
+    await tx1.done;
+
+    const tx2 = db.transaction(STORE_NAME, 'readwrite');
+    const restaurant2 = { id: 'r5', name: 'Restaurant 5' };
+    await tx2.objectStore(STORE_NAME).put(restaurant2);
+    await tx2.done;
+
+    const tx3 = db.transaction(STORE_NAME, 'readwrite');
+    await tx3.objectStore(STORE_NAME).delete('r4');
+    await tx3.done;
+
+    const savedRestaurant2 = await db.get(STORE_NAME, 'r5');
+    expect(savedRestaurant2).toEqual(restaurant2);
+
+    const deletedRestaurant1 = await db.get(STORE_NAME, 'r4');
+    expect(deletedRestaurant1).toBeUndefined();
+  });
 });
