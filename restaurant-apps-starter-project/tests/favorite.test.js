@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import FavoriteButtonPresenter from '../src/scripts/utils/favorite-button-presenter';
 
 const DATABASE_NAME = 'favorite-restaurants';
 const STORE_NAME = 'restaurants';
@@ -22,6 +23,7 @@ afterAll(async () => {
 
 // Membersihkan store sebelum setiap pengujian
 beforeEach(async () => {
+  document.body.innerHTML = '<div id="favoriteButtonContainer"></div>';
   const tx = db.transaction(STORE_NAME, 'readwrite');
   tx.objectStore(STORE_NAME).clear();
   await tx.done;
@@ -103,5 +105,74 @@ describe('Favorite Restaurants Integration Test', () => {
 
     const deletedRestaurant1 = await db.get(STORE_NAME, 'r4');
     expect(deletedRestaurant1).toBeUndefined();
+  });
+});
+
+describe('Favorite Button Integration Test', () => {
+  it('should show the favorite button when the restaurant has not been favorited', async () => {
+    await FavoriteButtonPresenter.init({
+      favoriteButtonContainer: document.getElementById('favoriteButtonContainer'),
+      restaurant: { id: 'r1' },
+    });
+
+    const button = document.querySelector('[aria-label="Tambahkan ke Favorit"]');
+    expect(button).toBeTruthy(); // Pastikan tombol dirender
+  });
+
+  it('should add the restaurant to IndexedDB when the favorite button is clicked', async () => {
+    await FavoriteButtonPresenter.init({
+      favoriteButtonContainer: document.getElementById('favoriteButtonContainer'),
+      restaurant: { id: 'r1', name: 'Mock Restaurant' },
+    });
+
+    const button = document.querySelector('#favoriteButton');
+    expect(button).toBeTruthy(); // Pastikan tombol dirender
+
+    button.click();
+
+    // Add a delay to ensure the data is saved before fetching
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    const tx = db.transaction(STORE_NAME, 'readonly');
+    const savedRestaurant = await tx.objectStore(STORE_NAME).get('r1');
+    await tx.done;
+
+    expect(savedRestaurant).toEqual({ id: 'r1', name: 'Mock Restaurant' });
+  });
+
+  it('should remove the restaurant from IndexedDB when the unfavorite button is clicked', async () => {
+    // Tambahkan restoran ke IndexedDB
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    await tx.objectStore(STORE_NAME).put({ id: 'r1', name: 'Mock Restaurant' });
+    await tx.done;
+
+    await FavoriteButtonPresenter.init({
+      favoriteButtonContainer: document.getElementById('favoriteButtonContainer'),
+      restaurant: { id: 'r1', name: 'Mock Restaurant' },
+    });
+
+    const button = document.querySelector('#favoriteButton');
+    expect(button).toBeTruthy(); // Pastikan tombol dirender
+
+    button.click();
+
+    // Add a delay to ensure the data is removed before fetching
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    const txCheck = db.transaction(STORE_NAME, 'readonly');
+    const deletedRestaurant = await txCheck.objectStore(STORE_NAME).get('r1');
+    await txCheck.done;
+
+    expect(deletedRestaurant).toBeUndefined(); // Pastikan data dihapus
+  });
+
+  it('should not add a restaurant without an ID to IndexedDB', async () => {
+    await FavoriteButtonPresenter.init({
+      favoriteButtonContainer: document.getElementById('favoriteButtonContainer'),
+      restaurant: { id: null }, // Null ID
+    });
+
+    const button = document.querySelector('#favoriteButton');
+    expect(button).toBeFalsy(); // Tombol tidak dirender karena ID tidak valid
   });
 });

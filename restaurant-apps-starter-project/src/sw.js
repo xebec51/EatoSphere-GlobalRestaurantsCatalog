@@ -106,8 +106,8 @@ self.addEventListener('install', (event) => {
           '/',
           '/index.html',
           '/manifest.json',
-          '/images/heros/hero-image-large.jpg',
-          '/images/heros/hero-image-small.jpg',
+          '/images/optimized/hero-image-large.webp',
+          '/images/optimized/hero-image-small.webp',
         ]);
         console.log('Assets pre-cached successfully.');
       } catch (error) {

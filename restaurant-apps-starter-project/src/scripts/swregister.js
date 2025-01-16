@@ -13,7 +13,7 @@ const swRegister = async () => {
       console.log('Service Worker updated. Clearing old cache...');
       caches.keys().then((cacheNames) => {
         cacheNames.forEach((cacheName) => {
-          if (!cacheName.startsWith('eatosphere-cache')) {
+          if (cacheName !== 'eatosphere-cache') {
             console.log(`Deleting cache: ${cacheName}`);
             caches.delete(cacheName).then((success) => {
               if (success) {
@@ -30,9 +30,9 @@ const swRegister = async () => {
 
   try {
     await wb.register();
-    console.log('Service Worker registered successfully.');
+    console.log('Service worker registered');
   } catch (error) {
-    console.error('Failed to register Service Worker:', error);
+    console.log('Failed to register service worker', error);
   }
 };
 
@@ -43,7 +43,6 @@ window.addEventListener('beforeinstallprompt', (event) => {
   event.preventDefault();
   deferredPrompt = event;
   console.log('Install prompt triggered.');
-
   // Tampilkan tombol Add to Home Screen di UI
   const a2hsButton = document.getElementById('a2hsButton');
   if (a2hsButton) {
