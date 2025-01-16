@@ -1,22 +1,18 @@
 ---
 
-# **EatoSphere - Global Restaurants Catalog**  
+# **EatoSphere - Global Restaurants Catalog**
 
-[![Website eatosphere.netlify.app](https://img.shields.io/website-up-down-green-red/https/eatosphere.netlify.app.svg)](https://eatosphere.netlify.app)  
+🌐 **Link Website**: [https://eatosphere.netlify.app](https://eatosphere.netlify.app)  
+🌐 **Link Repository GitHub**: [https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.git](https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.git)
+
+---
+
+---
+
 [![GitHub](https://img.shields.io/badge/GitHub-xebec51-blue?logo=github)](https://github.com/xebec51)  
-[![GitHub release](https://img.shields.io/github/release/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.svg)](https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding/releases/)  
-[![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)  
 [![Instagram](https://img.shields.io/badge/Instagram-rinaldiruslan-E4405F?logo=instagram)](https://www.instagram.com/rinaldiruslan/)  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/abc123/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)
-
----
-
-### **Link Repository GitHub**
-[https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.git](https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.git)
-
----
-
-![EatoSphere Preview](https://eatosphere.netlify.app/preview.jpg)
+[![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/abc123/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)  
 
 ---
 
@@ -27,23 +23,21 @@ EatoSphere adalah aplikasi katalog restoran global yang memungkinkan pengguna un
 - Menambahkan ulasan pelanggan langsung di aplikasi.  
 - Mengakses aplikasi secara offline berkat fitur Progressive Web App (PWA).  
 
-🌐 **Link Production**: [https://eatosphere.netlify.app](https://eatosphere.netlify.app)  
-
 ---
 
 ## **Fitur Utama**
-### **1. Halaman Utama**
-- Menampilkan daftar restoran lengkap dengan nama, kota, rating, dan deskripsi.  
+1. **Halaman Utama**  
+   - Menampilkan daftar restoran lengkap dengan nama, kota, rating, dan deskripsi.
 
-### **2. Halaman Detail**
-- Informasi lengkap restoran termasuk menu, lokasi, dan ulasan pelanggan.  
+2. **Halaman Detail**  
+   - Informasi lengkap restoran termasuk menu, lokasi, dan ulasan pelanggan.
 
-### **3. Halaman Favorit**
-- Menyimpan dan menampilkan restoran favorit.  
-- Memungkinkan pengguna menghapus restoran dari favorit.  
+3. **Halaman Favorit**  
+   - Menyimpan dan menampilkan restoran favorit.
+   - Memungkinkan pengguna menghapus restoran dari favorit.
 
-### **4. Offline Support**
-- Mendukung akses offline dengan cache Service Worker.  
+4. **Offline Support**  
+   - Mendukung akses offline dengan cache Service Worker.
 
 ---
 
