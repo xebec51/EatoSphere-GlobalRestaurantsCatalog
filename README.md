@@ -7,12 +7,10 @@
 
 ---
 
----
-
-[![GitHub](https://img.shields.io/badge/GitHub-xebec51-blue?logo=github)](https://github.com/xebec51)  
-[![Instagram](https://img.shields.io/badge/Instagram-rinaldiruslan-E4405F?logo=instagram)](https://www.instagram.com/rinaldiruslan/)  
-[![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)  
-[![Netlify Status](https://api.netlify.com/api/v1/badges/abc123/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)  
+[![GitHub](https://img.shields.io/badge/GitHub-xebec51-blue?logo=github)](https://github.com/xebec51) 
+[![Instagram](https://img.shields.io/badge/Instagram-rinaldiruslan-E4405F?logo=instagram)](https://www.instagram.com/rinaldiruslan/) 
+[![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC) 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/09639e6c-3bf2-482d-abc9-b4e024f8c34d/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)
 
 ---
 
