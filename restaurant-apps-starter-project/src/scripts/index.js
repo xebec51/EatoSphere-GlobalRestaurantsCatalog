@@ -75,7 +75,7 @@ function renderRestaurants(restaurants) {
         alt="Image of ${restaurant.name}" 
         loading="lazy">
       <div class="restaurant-info">
-        <h3>${restaurant.name}</h3>
+        <h1>${restaurant.name}</h1>
         <p>Kota: ${restaurant.city}</p>
         <p>Rating: ${restaurant.rating}</p>
         <p>${restaurant.description.substring(0, 100)}...</p>
