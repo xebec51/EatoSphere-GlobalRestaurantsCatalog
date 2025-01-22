@@ -4,8 +4,20 @@
 [![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC) 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/96a39bea-1725-42e8-8352-68e01209ab37/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)
 
-🌐 **Link Website**: [https://eatosphere.netlify.app](https://eatosphere.netlify.app)  
-🌐 **Link Repository GitHub**: [https://github.com/xebec51/Submission-Menjadi-Front-End-Web-Developer-Expert-Dicoding.git] 
+---
+
+![ScreenShoot](https://pbs.twimg.com/media/Gh3TDjVbEAAnBKV?format=jpg&name=4096x4096)
+
+---
+
+🌐 **Final Submission dari Kelas**: [Menjadi Front-End Web Developer Expert (MFWDE) - Dicoding](https://www.dicoding.com/academies/219)    
+🌐 **Link Production**: [https://eatosphere.netlify.app](https://eatosphere.netlify.app)
+
+---
+
+![Gambar Sertifikat](https://pbs.twimg.com/media/Gh3TFXZbUAAZYwe?format=jpg&name=4096x4096)
+
+---
 
 ## **Deskripsi Proyek**
 EatoSphere adalah aplikasi katalog restoran global yang memungkinkan pengguna untuk:  
