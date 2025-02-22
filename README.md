@@ -107,3 +107,6 @@ npm run e2e
   - **Email**: [rinaldi.ruslan51@gmail.com](mailto:rinaldi.ruslan51@gmail.com)  
   - **GitHub**: [xebec51](https://github.com/xebec51)  
   - **Instagram**: [@rinaldiruslan](https://www.instagram.com/rinaldiruslan/)
+
+## **Lisensi**
+Proyek ini dilisensikan di bawah **MIT License**. Lihat file [LICENSE](https://raw.githubusercontent.com/xebec51/EatoSphere-GlobalRestaurantsCatalog/refs/heads/main/LICENSE) untuk informasi lebih lanjut.
