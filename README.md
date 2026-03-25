@@ -42,12 +42,14 @@ EatoSphere adalah aplikasi katalog restoran global yang memungkinkan pengguna un
 - Menambahkan ulasan pelanggan langsung di aplikasi.  
 - Mengakses aplikasi secara offline berkat fitur Progressive Web App (PWA).  
 
+---
 ## 🚀 Key Highlights
 - ✅ Progressive Web App (PWA) with offline capability
 - ✅ IndexedDB integration for persistent favorites
 - ✅ Fully tested with Jest & Playwright
 - ✅ Optimized bundle with Webpack & code splitting
 
+---
 ## **Fitur Utama**
 1. **Halaman Utama**  
    - Menampilkan daftar restoran lengkap dengan nama, kota, rating, dan deskripsi.
