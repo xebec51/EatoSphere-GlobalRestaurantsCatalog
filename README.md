@@ -1,12 +1,27 @@
 # **EatoSphere - Global Restaurants Catalog**
-[![GitHub](https://img.shields.io/badge/GitHub-xebec51-blue?logo=github)](https://github.com/xebec51) 
-[![Instagram](https://img.shields.io/badge/Instagram-rinaldiruslan-E4405F?logo=instagram)](https://www.instagram.com/rinaldiruslan/) 
-[![MIT license](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC) 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/96a39bea-1725-42e8-8352-68e01209ab37/deploy-status)](https://app.netlify.com/sites/eatosphere/deploys)
+<p align="center">
+  <a href="https://github.com/xebec51">
+    <img src="https://img.shields.io/badge/GitHub-xebec51-blue?logo=github" />
+  </a>
+  <a href="https://www.instagram.com/rinaldiruslan/">
+    <img src="https://img.shields.io/badge/Instagram-rinaldiruslan-E4405F?logo=instagram" />
+  </a>
+  <a href="https://www.tiktok.com/@rinaldiruslan">
+    <img src="https://img.shields.io/badge/TikTok-rinaldiruslan-000000?logo=tiktok&logoColor=white" />
+  </a>
+  <br/>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" />
+  </a>
+  <a href="https://app.netlify.com/sites/eatosphere/deploys">
+    <img src="https://api.netlify.com/api/v1/badges/96a39bea-1725-42e8-8352-68e01209ab37/deploy-status" />
+  </a>
+</p>
 
 ---
-
-![ScreenShoot](https://pbs.twimg.com/media/Gh3TDjVbEAAnBKV?format=jpg&name=4096x4096)
+<p align="center">
+  <img src="https://pbs.twimg.com/media/Gh3TDjVbEAAnBKV?format=jpg&name=medium" width="600"/>
+</p>
 
 ---
 
@@ -14,8 +29,9 @@
 🌐 **Link Production**: [https://eatosphere.netlify.app](https://eatosphere.netlify.app)
 
 ---
-
-![Gambar Sertifikat](https://pbs.twimg.com/media/Gh3TFXZbUAAZYwe?format=jpg&name=4096x4096)
+<p align="center">
+  <img src="https://pbs.twimg.com/media/Gh3TFXZbUAAZYwe?format=jpg&name=medium" width="500"/>
+</p>
 
 ---
 
@@ -25,6 +41,12 @@ EatoSphere adalah aplikasi katalog restoran global yang memungkinkan pengguna un
 - Menyimpan restoran favorit untuk akses mudah.  
 - Menambahkan ulasan pelanggan langsung di aplikasi.  
 - Mengakses aplikasi secara offline berkat fitur Progressive Web App (PWA).  
+
+## 🚀 Key Highlights
+- ✅ Progressive Web App (PWA) with offline capability
+- ✅ IndexedDB integration for persistent favorites
+- ✅ Fully tested with Jest & Playwright
+- ✅ Optimized bundle with Webpack & code splitting
 
 ## **Fitur Utama**
 1. **Halaman Utama**  
@@ -107,6 +129,7 @@ npm run e2e
   - **Email**: [rinaldi.ruslan51@gmail.com](mailto:rinaldi.ruslan51@gmail.com)  
   - **GitHub**: [xebec51](https://github.com/xebec51)  
   - **Instagram**: [@rinaldiruslan](https://www.instagram.com/rinaldiruslan/)
+  - **TikTok**: [@rinaldiruslan](https://www.tiktok.com/@rinaldiruslan)
 
 ## **Lisensi**
 Proyek ini dilisensikan di bawah **MIT License**. Lihat file [LICENSE](https://raw.githubusercontent.com/xebec51/EatoSphere-GlobalRestaurantsCatalog/refs/heads/main/LICENSE) untuk informasi lebih lanjut.
